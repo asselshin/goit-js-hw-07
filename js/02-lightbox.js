@@ -3,10 +3,6 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-// new SimpleLightbox('.some-element a', {
-//   /* options */
-// });
-
 const gallery = document.querySelector('.gallery');
 
 const imageLi = galleryItems
@@ -18,10 +14,7 @@ const imageLi = galleryItems
 
 gallery.insertAdjacentHTML('afterbegin', imageLi);
 
-
-let galleryBox = new SimpleLightbox('.gallery a');
-
-gallery.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    galleryBox.on();
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
 });
