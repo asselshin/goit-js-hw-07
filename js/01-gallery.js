@@ -1,8 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
-
 const gallery = document.querySelector('.gallery');
 
 const imageList = galleryItems
@@ -15,27 +13,23 @@ const imageList = galleryItems
 gallery.insertAdjacentHTML('afterbegin', imageList);
 
 gallery.addEventListener('click', event => {
-    event.preventDefault();
-    const fullImage = event.target.dataset.src;
-    const altFullImage = event.target.alt;
-    
-    const instance = basicLightbox.create(`
-    <img src="${fullImage}" alt="${altFullImage}" width="800" height="600"/>
-`);
+  event.preventDefault();
+  
+  const fullImage = event.target.dataset.src;
+  const altFullImage = event.target.alt;
 
-    instance.show();
-
-    document.addEventListener('keydown', ev => {
-      if (ev.code === 'Escape') {
-          instance.close();          
-          
-        }
-    });
+  const instance = basicLightbox.create(`<img src="${fullImage}" alt="${altFullImage}" width="800" height="600"/>`, {
+    onShow: () => window.addEventListener('keydown', isEscapeKey),
+    onClose: () => window.removeEventListener('keydown', isEscapeKey),
+  });
+  
+  if (event.target.nodeName === 'IMG') {
+    instance.show();    
+  };
     
-    document.removeEventListener('keydown', ev => {
-      if (ev.code === 'Escape') {
-        instance.close();
-      }
-    });
-    
+  function isEscapeKey(event) {
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  };  
 });
