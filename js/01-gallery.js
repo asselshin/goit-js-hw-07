@@ -15,6 +15,10 @@ gallery.insertAdjacentHTML('afterbegin', imageList);
 gallery.addEventListener('click', event => {
   event.preventDefault();
   
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  };
+
   const fullImage = event.target.dataset.src;
   const altFullImage = event.target.alt;
 
@@ -23,9 +27,7 @@ gallery.addEventListener('click', event => {
     onClose: () => window.removeEventListener('keydown', isEscapeKey),
   });
   
-  if (event.target.nodeName === 'IMG') {
-    instance.show();    
-  };
+  instance.show();    
     
   function isEscapeKey(event) {
     if (event.code === 'Escape') {
